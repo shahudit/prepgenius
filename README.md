@@ -103,7 +103,7 @@ Override these via `ADMIN_EMAIL` / `ADMIN_PASSWORD` / `ADMIN_NAME` in `.env` (or
 - **Auth:** Secure registration and login using JWT.
 - **Interviews:** Customizable mock interview sessions (by topic, company, difficulty).
 - **AI Integration:** Real-time AI-driven question generation and answer evaluation.
-- **Analytics:** Tracking progress, identifying weak spots, providing downloadable learning material for weak topics, and viewing performance trends.
+- **Analytics:** Tracking progress, identifying weak and strong spots, providing downloadable learning material for weak topics, and viewing performance trends.
 - **History:** Reviewing past interview attempts.
 
 ### Admin Console

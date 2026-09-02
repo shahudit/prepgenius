@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #F6F5F9;
+  color: #12131C;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Sora', sans-serif;
+}
+
+::selection {
+  background: #C4B7FB;
+  color: #1D1150;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9D5EA;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* focus visibility for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #6C4EEF;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Signature element: the "pulse ring" used around the AI orb throughout the app */
+.ai-orb {
+  position: relative;
+}
+.ai-orb::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  background: conic-gradient(from 180deg, #6C4EEF, #2DD4BF, #6C4EEF);
+  opacity: 0.35;
+  filter: blur(6px);
+  animation: spin 6s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.card-hover {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+}

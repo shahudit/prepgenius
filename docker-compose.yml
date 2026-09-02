@@ -1,0 +1,51 @@
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: prepgenius-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    container_name: prepgenius-backend
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGODB_URI: ${MONGODB_URI:-mongodb://mongo:27017/prepgenius}
+      JWT_SECRET: ${JWT_SECRET:-024aQBoy46vOjN7UNZjgvuNOZ7RYsuzEgUUWKPcF648ug8njbekSjKMYjDqi/INXh8bC9+6SV8MjHfJ+vS05VA==}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-1.5-flash}
+      GEMINI_TIMEOUT_SECONDS: ${GEMINI_TIMEOUT_SECONDS:-60}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@prepgenius.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin@123}
+      ADMIN_NAME: ${ADMIN_NAME:-PrepGenius Admin}
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: prepgenius-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8080
+    ports:
+      - "5173:5173"
+
+volumes:
+  mongo-data:

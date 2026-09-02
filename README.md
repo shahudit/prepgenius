@@ -21,10 +21,9 @@ The project is organized into a monorepo structure:
 ### Backend
 - **Language:** Java 17
 - **Framework:** Spring Boot 3.3.2
-- **Database:** MongoDB
+- **Database:** MongoDB Atlas
 - **Security:** Spring Security with JWT Authentication
 - **AI Integration:** Google Gemini API
-- **API Documentation:** Swagger/OpenAPI
 
 ## Getting Started
 
@@ -104,20 +103,10 @@ Override these via `ADMIN_EMAIL` / `ADMIN_PASSWORD` / `ADMIN_NAME` in `.env` (or
 - **Auth:** Secure registration and login using JWT.
 - **Interviews:** Customizable mock interview sessions (by topic, company, difficulty).
 - **AI Integration:** Real-time AI-driven question generation and answer evaluation.
-- **Analytics:** Tracking progress, identifying weak spots, and viewing performance trends.
+- **Analytics:** Tracking progress, identifying weak spots, provide downloadable learning material for weak topics, and viewing performance trends.
 - **History:** Reviewing past interview attempts.
 
 ### Admin Console
 - **Dashboard:** Platform-wide statistics.
-- **Management:** CRUD operations for Users, Companies, Categories, and Learning Resources.
+- **Management:** CRUD operations for Users, Companies and Categories.
 - **Reports:** Advanced analytics on learner performance.
-
-## Fixes applied in this build
-
-- **Fixed "Registration failed" bug:** `jwt.secret` in `application.properties` was not valid Base64, but `JwtService` decodes it as Base64 to build the signing key. This threw an exception *after* the user was already saved to Mongo, during registration's token-generation step — surfacing as a generic "Registration failed" on the frontend (and would have broken login the same way). Replaced with a properly generated Base64 key, and fixed the same bug in the test config.
-- Enabled real `.env` file loading in Spring Boot (`spring.config.import`) so Mongo Atlas URI / secrets don't need manual shell exports.
-- Added default admin account seeding — previously there was no way to reach `/admin` at all on a fresh database.
-- Wired CORS to respect `FRONTEND_URL` in addition to the hardcoded localhost origins.
-- Added `docker-compose.yml` + Dockerfiles for one-command startup of Mongo + backend + frontend together.
-- Verified the frontend builds cleanly and cross-checked every frontend API call against backend route mappings.
-

@@ -1,4 +1,4 @@
-# PrepGenius — AI Interview Preparation System
+# PrepGenius — AI-Powered Interview Preparation System
 
 PrepGenius is a full-stack platform designed to help candidates prepare for technical and behavioral interviews. It leverages AI for intelligent question generation and answer evaluation, while providing comprehensive tracking of user progress, interview history, and administrative management.
 
